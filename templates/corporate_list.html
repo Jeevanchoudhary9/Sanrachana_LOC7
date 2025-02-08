@@ -1,0 +1,169 @@
+
+{%extends 'layout.html' %}
+{%block title %}Corporate Budget Allocation{%endblock %}
+{%block content %}
+    
+<div class="bg-gray-50 my-32">
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold text-center gradient-text mb-8">
+            Corporate Budget Allocation
+        </h1>
+
+        <div class="flex justify-between items-center mb-8">
+            <div class="text-sm text-gray-600">
+                Showing all available corporate partners
+            </div>
+            <div class="flex items-center space-x-2">
+                <div class="relative">
+                    <input type="text" 
+                           id="searchInput" 
+                           placeholder="Search by company name..." 
+                           class="pl-10 pr-4 py-2 border border-gray-200 rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+                <select class="py-2 px-4 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <option>All Regions</option>
+                    <option>Asia</option>
+                    <option>Europe</option>
+                    <option>Global</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="space-y-4" id="companyList">
+            <!-- Company Card 1 -->
+            <div class="space-y-4" id="companyList">
+            {% for requirement in corp_initiatives %}
+            <div class="bg-white p-6 rounded-xl shadow-sm card-hover requirement-card">
+                <div class="flex items-start">
+                    <img src="data:image/png;base64,{{ requirement.logo }}" 
+                        alt="User Logo" 
+                        class="w-24 h-24 object-cover rounded-lg">
+        
+                    <div class="ml-6 flex-grow">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <div class="mt-4 flex flex-row items-center space-x-16 text-gray-600">
+                                    <!-- Left Column -->
+                                    <div class="flex flex-col space-y-2">
+                                        <h3 class="text-xl font-semibold text-gray-900 project-name">{{ requirement.initiative_name }}</h3>
+                                        <div class="flex items-center">
+                                            <i class="fas fa-dollar-sign w-4 text-purple-600"></i>
+                                            <span class="requirement-details">Funding: {% if requirement.type_of_initiaitive=="Funds" %} ${{ requirement.quantity }} {% else %} {{ requirement.quantity }} {% endif %}</span>
+                                        </div>
+                                    </div>
+        
+                                    <!-- Right Column -->
+                                    <div class="flex flex-col space-y-2">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-globe w-5 text-purple-600"></i>
+                                            <span class="ml-2 location">{{ requirement.location }}</span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <i class="fas fa-hands-helping w-5 text-purple-600"></i>
+                                            <span class="ml-2 support-type">{{ requirement.type_of_initiaitive }}</span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <i class="fas fa-circle w-5 text-purple-600"></i>
+                                            <span class="ml-2 support-type">Domain: {{ requirement.domain }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col space-y-2">
+                                <!-- Request Funding Button -->
+                                <button onclick="toggleDropdown(this)" 
+                                        class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium w-full">
+                                    Request Funding
+                                </button>
+                            
+                                <!-- Hidden Dropdown Menu -->
+                                <div class="hidden dropdown-menu bg-white border border-gray-200 rounded-lg shadow-lg mt-2">
+                                    {% for project in project_list %}
+                                    
+                                        <a href="{{ url_for('partnership_request_ngo', initiative_id=requirement.initiative_id, project_id=project.project_id) }}"
+                                           class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                            {{ project.project_name }}
+                                        </a>
+
+                                    {% endfor %}
+                                </div>
+                            
+                                <!-- Chat Button -->
+                                <button class="px-4 py-2 text-purple-600 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors font-medium w-full">
+                                    Chat
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+            
+        </div>
+    </div>
+
+</div>
+
+{%endblock %}
+{%block style %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
+    body {
+        font-family: 'Inter', sans-serif;
+    }
+
+    .gradient-text {
+        background: linear-gradient(45deg, #6B46C1, #9F7AEA);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .glass-effect {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-hover {
+        transition: all 0.3s ease;
+    }
+
+    .card-hover:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-link {
+        transition: all 0.2s ease;
+    }
+
+    .chat-link:hover {
+        color: #6B46C1;
+    }
+</style>
+{%endblock %}
+
+{%block script %}
+<script>
+    AOS.init();
+    function toggleDropdown(button) {
+        let dropdown = button.nextElementSibling;
+        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+            if (menu !== dropdown) menu.classList.add('hidden'); // Hide other dropdowns
+        });
+        dropdown.classList.toggle('hidden');
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function (event) {
+        if (!event.target.closest('.flex-col')) {
+            document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.add('hidden'));
+        }
+    });
+</script>
+{%endblock %}

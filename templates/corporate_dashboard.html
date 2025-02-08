@@ -1,0 +1,226 @@
+{% extends 'layout.html' %}
+{% block title %}
+Corporate Dashboard
+{% endblock %}
+{% block content %}
+   
+
+<div class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen my-8">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-4">
+        <div class="container mx-auto">
+            <div class="glass-effect mx-4 rounded-full px-8 py-4 flex justify-between items-center">
+                <h1 class="text-2xl font-bold gradient-text">CSR Portal</h1>
+                <div class="flex items-center space-x-6">
+                    <span class="text-gray-600">Welcome, TechCorp</span>
+                    <a href="{{url_for('logout')}}" class="bg-gradient-to-r from-purple-600 to-indigo-500 text-white px-6 py-2 rounded-full hover:opacity-90 transition-all">
+                        Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 pt-24 pb-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Left Column -->
+        <div class="lg:col-span-2 space-y-8">
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" data-aos="fade-up">
+                <div class="glass-effect p-6 rounded-2xl hover-scale">
+                    <p class="text-gray-500 mb-2">Total Funds Allocated</p>
+                    <p class="text-4xl font-bold gradient-text">₹50L</p>
+                </div>
+                <div class="glass-effect p-6 rounded-2xl hover-scale">
+                    <p class="text-gray-500 mb-2">Active Partnerships</p>
+                    <p class="text-4xl font-bold text-blue-600">5</p>
+                </div>
+                <div class="glass-effect p-6 rounded-2xl hover-scale">
+                    <p class="text-gray-500 mb-2">Impact Score</p>
+                    <p class="text-4xl font-bold text-green-600">8.7</p>
+                </div>
+            </div>
+
+            <!-- Map Section -->
+            <div class="glass-effect rounded-2xl p-8" data-aos="fade-up">
+                <h2 class="text-2xl font-bold gradient-text mb-4">Geographical Focus</h2>
+                <div id="map"></div>
+                <div class="mt-4 flex space-x-4">
+                    <select class="form-select block w-full p-2 rounded-md">
+                        <option>All Regions</option>
+                        <option>North India</option>
+                        <option>South India</option>
+                        <option>East India</option>
+                        <option>West India</option>
+                    </select>
+                    <button class="bg-gradient-to-r from-purple-500 to-indigo-400 text-white px-4 py-2 rounded-md hover:opacity-90">
+                        Apply Filter
+                    </button>
+                </div>
+            </div>
+
+            <!-- Suggested NGO Matches -->
+            <div class="glass-effect rounded-2xl p-8" data-aos="fade-up">
+                <h2 class="text-2xl font-bold gradient-text mb-6">Suggested NGO Matches</h2>
+                <div class="space-y-4">
+                    <!-- Match Cards -->
+                    <div class="glass-effect p-6 rounded-xl hover-scale flex items-center justify-between">
+                        <div>
+                            <h3 class="font-semibold">EduForAll Foundation</h3>
+                            <p class="text-sm text-gray-500">Education | Rating: 4.5</p>
+                            <div class="flex items-center space-x-2 mt-2">
+                                <span class="text-xs px-2 py-1 bg-green-100 text-green-600 rounded-full">Aligned Goals</span>
+                                <span class="text-xs px-2 py-1 bg-blue-100 text-blue-600 rounded-full">Budget Match</span>
+                            </div>
+                        </div>
+                        <button class="bg-gradient-to-r from-purple-500 to-indigo-400 text-white px-6 py-2 rounded-full hover:opacity-90">
+                            Initiate Collaboration <i class="ml-2 fas fa-handshake"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="space-y-8">
+            <!-- Quick Actions -->
+            <div class="glass-effect p-8 rounded-2xl" data-aos="fade-left">
+                <h2 class="text-2xl font-bold gradient-text mb-6">Quick Actions</h2>
+                <div class="space-y-4">
+                    <a href="{{url_for('corporate_initiative')}}" class="w-full glass-effect p-4 rounded-xl hover-scale text-left flex items-center">
+                        <i class="fas fa-plus-circle text-2xl text-purple-600 mr-4"></i>
+                        Create New CSR Project
+                    </a>
+                    <a href="{{url_for('ngo_list')}}" class="w-full glass-effect p-4 rounded-xl hover-scale text-left flex items-center">
+                        <i class="fas fa-handshake text-2xl text-blue-600 mr-4"></i>
+                        Find NGO Partners
+                    </a>
+                    <a href="{{url_for('ngo_portal_accept')}}" class="w-full glass-effect p-4 rounded-xl hover-scale text-left flex items-center">
+                        <i class="fas fa-chart-line text-2xl text-green-600 mr-4"></i>
+                        Accept Fundings Request
+                    </a>
+                </div>
+            </div>
+
+            <!-- Investment Opportunities -->
+            <div class="glass-effect p-8 rounded-2xl" data-aos="fade-left">
+                <h2 class="text-2xl font-bold gradient-text mb-6">Investment Opportunities</h2>
+                <div class="space-y-4">
+                    <div class="glass-effect p-6 rounded-xl">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-chart-line text-2xl text-purple-600 mr-3"></i>
+                            <h3 class="font-semibold">Expand Your Impact</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Discover more NGO partnerships and investment opportunities aligned with your CSR goals.</p>
+                        <a href="/investment-opportunities">
+                            <button class="w-full bg-gradient-to-r from-purple-500 to-indigo-400 text-white px-6 py-3 rounded-full hover:opacity-90 flex items-center justify-center">
+                                <i class="fas fa-arrow-trend-up mr-2"></i>
+                                Explore More Investments
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Filters -->
+            <div class="glass-effect p-8 rounded-2xl" data-aos="fade-left">
+                <h2 class="text-2xl font-bold gradient-text mb-4">Refine Your Search</h2>
+                <div class="space-y-4">
+                    <!-- Filter Options -->
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Sector:</label>
+                        <select class="form-select block w-full p-2 rounded-md">
+                            <option>All Sectors</option>
+                            <option>Education</option>
+                            <option>Healthcare</option>
+                            <option>Environment</option>
+                            <option>Livelihood</option>
+                        </select>
+                    </div>
+                    <button class="bg-gradient-to-r from-purple-500 to-indigo-400 text-white px-6 py-2 rounded-full hover:opacity-90 w-full">
+                        Apply Filters
+                    </button>
+                </div>
+            </div>
+
+            <!-- Impact Metrics -->
+            <div class="glass-effect p-8 rounded-2xl" data-aos="fade-left">
+                <h2 class="text-2xl font-bold gradient-text mb-6">Your CSR Impact</h2>
+                <div style="position: relative; height: 300px;">
+                    <canvas id="impactChart"></canvas>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    
+</div>
+
+{% endblock %}
+{% block style %}
+<style>
+    .gradient-text {
+        background: linear-gradient(45deg, #6B46C1, #9F7AEA);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .glass-effect {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .hover-scale {
+        transition: transform 0.3s ease;
+    }
+    .hover-scale:hover {
+        transform: scale(1.02);
+    }
+    #map { height: 300px; width: 100%; border-radius: 0.75rem; }
+</style>
+{% endblock %}
+
+{% block script %}
+<script>
+    // Initialize animations
+    AOS.init({ duration: 800, once: true });
+
+    // Initialize map
+    var map = L.map('map').setView([20.5937, 78.9629], 4);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    L.marker([28.6139, 77.2090]).addTo(map).bindPopup('EduForAll Foundation');
+    L.marker([13.0827, 80.2707]).addTo(map).bindPopup('Clean Water Initiative');
+
+    // Initialize chart
+    const ctx = document.getElementById('impactChart').getContext('2d');
+new Chart(ctx, {
+type: 'pie',
+data: {
+    labels: ['Education', 'Environment', 'Healthcare', 'Livelihood'],
+    datasets: [{
+        data: [30, 25, 20, 25],
+        backgroundColor: ['#6B46C1', '#3B82F6', '#10B981', '#F59E0B']
+    }]
+},
+options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    layout: {
+        padding: 20
+    },
+    plugins: {
+        legend: {
+            position: 'bottom',
+            labels: { 
+                padding: 20, 
+                color: '#64748B',
+                boxWidth: 15
+            }
+        }
+    }
+}
+});
+
+</script>
+{% endblock %}
+
