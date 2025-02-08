@@ -7,86 +7,76 @@ Grocerises - Login
 
 
 {% block content %}
-<section class="text-gray-600 body-font relative">
-    <form action="/register" method="post" class="mt-5">
-    <div class="container px-5 py-15 mx-auto">
-      <div class="flex flex-col text-center w-full mb-12">
-        <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Register</h1>
-      </div>
-      <div class="lg:w-1/2 md:w-2/3 mx-auto">
-        <div class="flex flex-wrap -m-2">
-          <div class="p-2 w-1/2">
-            <div class="relative">
-              <label for="firstname" class="leading-7 text-sm text-gray-600">First Name</label>
-              <input type="text" id="firstname" name="firstname" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"required autofocus>
-            </div>
-          </div>
-          <div class="p-2 w-1/2">
-            <div class="relative">
-              <label for="lastname" class="leading-7 text-sm text-gray-600">Last Name</label>
-              <input type="text" id="lastname" name="lastname" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" required>
-            </div>
-          </div>
-          </div>
-          <div class="flex flex-wrap -m-2">
-            <div class="p-2 w-1/2">
-              <div class="relative">
-                <label for="username" class="leading-7 text-sm text-gray-600">Username</label>
-                <input type="text" id="username" name="username" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" required>
+<div class="bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900">
+
+  <!-- Register Content -->
+  <div class="min-h-screen flex items-center justify-center">
+      <div class="container max-w-md mx-auto px-4 py-24" data-aos="zoom-in">
+          <div class="glass-effect rounded-2xl p-8">
+              <div class="flex justify-between items-center mb-6">
+                  <h3 class="text-2xl font-bold gradient-text">Create Account</h3>
+                  <a href="{{url_for('index')}}" class="text-gray-500 hover:text-gray-700">&times;</a>
               </div>
-            </div>
-            <div class="p-2 w-1/2">
-              <div class="relative">
-                <label for="password" class="leading-7 text-sm text-gray-600">Password</label>
-                <input type="password" id="password" name="password" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" required>
-              </div>
-            </div>
-            </div>
-            <div class="flex flex-wrap -m-2">
-                <div class="p-2 w-1/2">
-                  <div class="relative">
-                    <label for="email" class="leading-7 text-sm text-gray-600">Email</label>
-                    <input type="email" id="email" name="email" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" required>
-                  </div>
-                </div>
-                <div class="p-2 w-1/2">
-                  <div class="relative">
-                    <label for="phone" class="leading-7 text-sm text-gray-600">Phone No.</label>
-                    <input type="text" maxlength="10" minlength="0" id="phone" name="phone" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" required>
-                  </div>
-                </div>
-                </div>
-                <div class="p-2 w-full">
-                    <div class="relative">
-                      <label for="address" class="leading-7 text-sm text-gray-600">Address</label>
-                      <textarea id="address" name="address" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out" required></textarea>
-                    </div>
-                  </div>
-                  </div>
-          <div class="p-2 w-full">
-            <input type="submit" class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" value="Register" />
+                  <form class="space-y-4" action="{{url_for('register')}}" method="POST">
+                      <div>
+                          <label class="block text-gray-700 mb-2">Full Name</label>
+                          <input type="text" class="w-full px-4 py-3 rounded-lg bg-white border border-gray-200 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                      </div>
+                      <div>
+                          <label class="block text-gray-700 mb-2">Email</label>
+                          <input type="email" class="w-full px-4 py-3 rounded-lg bg-white border border-gray-200 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                      </div>
+                      <div>
+                          <label class="block text-gray-700 mb-2">Organization</label>
+                          <input type="text" class="w-full px-4 py-3 rounded-lg bg-white border border-gray-200 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                      </div>
+                      <div>
+                          <label class="block text-gray-700 mb-2">Account Type</label>
+                          <select class="w-full px-4 py-3 rounded-lg bg-white border border-gray-200 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                              <option>Corporate</option>
+                              <option>NGO</option>
+                          </select>
+                      </div>
+                      <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-indigo-500 text-white py-3 rounded-lg hover:opacity-90 transition-all">
+                          Create Account
+                      </button>
+                      <p class="text-center mt-4 text-gray-600">
+                          Existing user? 
+                          <button type="button" onclick="showPage('login')" class="text-purple-600 hover:underline">Sign In</button>
+                      </p>
+                  </form>
           </div>
-        </div>
       </div>
-    </div>
-    </form>
-  </section>
+  </div>
+
+  <script>
+      AOS.init({ duration: 1000, once: true });
+  </script>
+</div>
 {% endblock %}
 
 {% block style %}  
 <style>
-    form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    h1 {
-        margin-top: 60px;
-    }
-    input {
-        margin-top: 5px;
-        align-items: center;
-        flex-direction: column;
-    }
+  /* Same styles as index.html */
+  .gradient-text {
+      background: linear-gradient(45deg, #6B46C1, #9F7AEA);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+  }
+  
+  .glass-effect {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .hover-scale {
+      transition: transform 0.3s ease;
+  }
+  
+  .hover-scale:hover {
+      transform: scale(1.05);
+  }
 </style>
 {% endblock %}

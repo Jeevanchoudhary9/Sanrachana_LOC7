@@ -99,7 +99,7 @@ def register():
         return redirect(url_for('register'))
     
     elif request.method == "GET":
-        return render_template('login_register/register.html', nav="register")
+        return render_template('register.html', nav="register")
     
     else:
         return redirect(url_for('login'))

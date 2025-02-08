@@ -6,38 +6,17 @@
   <script src="https://cdn.tailwindcss.com"></script>
   </head>
 <body>
-  <header class="text-gray-600 body-font bg-gray-100">
-    
-    <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-        <a class="navbar-brand" href="{{url_for('index')}}" style="font-weight: bold;font-size:15pt"><img src="templates/gs.png" alt="Image" class="mx-auto  w-20" /></a>
-      
-      <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
-        <a class="mr-5 text-red-500">
-          {%if nav=="dashboard"%}
-            <code>{{user.uname}}'s Dashboard</code>
-          {%elif nav=="profile"%}
-            <code>{{user.uname}}'s Profile</code>
-          {%else%}
-            <code>Login/Sign Up</code>
-
-          {%endif%}
-        </a>
-      </nav>
-      <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-        {%if nav=="dashboard"%}
-          <a class="mr-5 hover:text-gray-900" href="{{url_for('profile')}}">Profile</a>
-          <a class="mr-5 hover:text-gray-900 md:pl-4 md:border-l md:border-gray-400" href="{{url_for('logout')}}">Logout</a>
-
-        {%elif nav=="profile"%}
-          <a class="mr-5 hover:text-gray-900" href="{{url_for('index')}}">Home</a>
-          <a class="mr-5 hover:text-gray-900 md:pl-4 md:border-l md:border-gray-400" href="{{url_for('logout')}}">Logout</a>
-
-        {%else%}
-          <a class="mr-5 hover:text-gray-900" href="{{url_for('login')}}">Customer</a>
-        {%endif%}
-        
-      </nav>
+  <!-- Navigation -->
+  <nav class="fixed w-full z-50 top-4">
+    <div class="container mx-auto">
+        <div class="glass-effect mx-4 rounded-full px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold gradient-text">CSR Portal</a>
+            <div class="space-x-4">
+                <a href="{{url_for('login')}}" class="bg-black/5 hover:bg-black/10 px-6 py-2 rounded-full transition-all text-gray-700">Login</a>
+                <a href="{{url_for('register')}}" class="bg-gradient-to-r from-purple-600 to-indigo-500 text-white px-6 py-2 rounded-full hover:opacity-90 transition-all">Register</a>
+            </div>
+        </div>
     </div>
-  </header>
+</nav>
 </body>
 </html>

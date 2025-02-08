@@ -9,9 +9,14 @@ import razorpay
 from auth import auth_required, admin_required
 
 @app.route('/')
-@auth_required
 def index():
-    return render_template('index.html',user=User.query.filter_by(userid=session['user_id']).first(),nav="dashboard",categories=Category.query.all(),products=Product.query.all())
+    return render_template('landing.html',nav="landing")
+
+@app.route('/ngo_dashboard')
+def ngo_dashboard():
+    return render_template('NGO_dashboard.html',nav="ngo_dashboard")
+
+
 
 @app.route('/profile',methods=["GET","POST"])
 @auth_required

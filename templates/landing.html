@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900">
+
+    <!-- Hero Section with 3D Elements -->
+    <div class="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="absolute w-full h-full">
+            <div class="absolute top-0 left-0 w-96 h-96 bg-purple-100 rounded-full filter blur-3xl"></div>
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-indigo-100 rounded-full filter blur-3xl"></div>
+        </div>
+        <div class="container mx-auto text-center z-10" data-aos="fade-up">
+            <h2 class="text-6xl font-bold mb-6 gradient-text">Transform Society Together</h2>
+            <p class="text-xl mb-12 text-gray-600">Connecting Corporations with NGOs for Meaningful Impact</p>
+            <div class="flex justify-center space-x-6">
+                <button class="group relative px-8 py-4 bg-white text-gray-900 rounded-full overflow-hidden hover-scale shadow-lg">
+                    <span class="relative z-10">For Corporates</span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-purple-500 to-indigo-400 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                </button>
+                <button class="px-8 py-4 border-2 border-gray-300 rounded-full hover:bg-black/5 transition-all hover-scale text-gray-700">
+                    For NGOs
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Features Grid -->
+    <div class="container mx-auto py-24">
+        <h3 class="text-4xl font-bold text-center mb-16 gradient-text" data-aos="fade-up">Revolutionary Features</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
+            <!-- Interactive Feature Cards -->
+            <div class="glass-effect p-8 rounded-2xl hover-scale" data-aos="fade-up" data-aos-delay="100">
+                <div class="h-16 w-16 bg-gradient-to-br from-purple-500 to-indigo-400 rounded-full flex items-center justify-center mb-6 text-white">
+                    <i class="fas fa-handshake text-2xl"></i>
+                </div>
+                <h4 class="text-xl font-bold mb-4">Smart Matching</h4>
+                <p class="text-gray-600">AI-powered matching system connects the right partners</p>
+            </div>
+            <!-- Add more feature cards with similar structure -->
+        </div>
+    </div>
+
+    <!-- Live Dashboard Preview -->
+    <div class="py-24 relative">
+        <div class="container mx-auto">
+            <h3 class="text-4xl font-bold text-center mb-16 gradient-text" data-aos="fade-up">Live Impact Dashboard</h3>
+            <div class="glass-effect p-8 rounded-3xl" data-aos="fade-up">
+                <!-- Add interactive charts and live data here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modern Footer -->
+    <footer class="border-t border-gray-200 py-12">
+        <div class="container mx-auto text-center">
+            <div class="gradient-text text-xl font-bold mb-4">CSR Portal</div>
+            <p class="text-gray-600">© 2024 All rights reserved</p>
+        </div>
+    </footer>
+
+    <!-- Modals with Glass Effect -->
+    <!-- Add updated modals here -->
+
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
+</body>
+{% endblock %}
+
+{% block style %}
+<style>
+    .gradient-text {
+        background: linear-gradient(45deg, #6B46C1, #9F7AEA);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    .glass-effect {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .hover-scale {
+        transition: transform 0.3s ease;
+    }
+    
+    .hover-scale:hover {
+        transform: scale(1.05);
+    }
+</style>
+{% endblock %}
