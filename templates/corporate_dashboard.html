@@ -4,7 +4,6 @@ Corporate Dashboard
 {% endblock %}
 {% block content %}
    
-
 <div class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen my-8">
     <!-- Navigation -->
     <nav class="fixed w-full z-50 top-4">
@@ -28,11 +27,11 @@ Corporate Dashboard
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6" data-aos="fade-up">
                 <div class="glass-effect p-6 rounded-2xl hover-scale">
                     <p class="text-gray-500 mb-2">Total Funds Allocated</p>
-                    <p class="text-4xl font-bold gradient-text">₹50L</p>
+                    <p class="text-4xl font-bold gradient-text">₹1500</p>
                 </div>
                 <div class="glass-effect p-6 rounded-2xl hover-scale">
                     <p class="text-gray-500 mb-2">Active Partnerships</p>
-                    <p class="text-4xl font-bold text-blue-600">5</p>
+                    <p class="text-4xl font-bold text-blue-600">{{partnership_count}}</p>
                 </div>
                 <div class="glass-effect p-6 rounded-2xl hover-scale">
                     <p class="text-gray-500 mb-2">Impact Score</p>
@@ -41,18 +40,20 @@ Corporate Dashboard
             </div>
 
             <!-- Map Section -->
+            <!-- Include Leaflet.js -->
             <div class="glass-effect rounded-2xl p-8" data-aos="fade-up">
                 <h2 class="text-2xl font-bold gradient-text mb-4">Geographical Focus</h2>
-                <div id="map"></div>
+                <div id="map" class="w-full h-96 rounded-lg"></div>
+
                 <div class="mt-4 flex space-x-4">
-                    <select class="form-select block w-full p-2 rounded-md">
-                        <option>All Regions</option>
-                        <option>North India</option>
-                        <option>South India</option>
-                        <option>East India</option>
-                        <option>West India</option>
+                    <select id="regionFilter" class="form-select block w-full p-2 rounded-md">
+                        <option value="all">All Regions</option>
+                        <option value="North India">North India</option>
+                        <option value="South India">South India</option>
+                        <option value="East India">East India</option>
+                        <option value="West India">West India</option>
                     </select>
-                    <button class="bg-gradient-to-r from-purple-500 to-indigo-400 text-white px-4 py-2 rounded-md hover:opacity-90">
+                    <button onclick="filterMap()" class="bg-gradient-to-r from-purple-500 to-indigo-400 text-white px-4 py-2 rounded-md hover:opacity-90">
                         Apply Filter
                     </button>
                 </div>
@@ -60,23 +61,26 @@ Corporate Dashboard
 
             <!-- Suggested NGO Matches -->
             <div class="glass-effect rounded-2xl p-8" data-aos="fade-up">
+ 
                 <h2 class="text-2xl font-bold gradient-text mb-6">Suggested NGO Matches</h2>
+                {%for ngo in nog_all %}
                 <div class="space-y-4">
                     <!-- Match Cards -->
                     <div class="glass-effect p-6 rounded-xl hover-scale flex items-center justify-between">
                         <div>
-                            <h3 class="font-semibold">EduForAll Foundation</h3>
-                            <p class="text-sm text-gray-500">Education | Rating: 4.5</p>
+                            <h3 class="font-semibold">{{ngo.organization_name}}</h3>
+                            <p class="text-sm text-gray-500">{{ngo.domain}} | Motto: {{ngo.motto}}</p>
                             <div class="flex items-center space-x-2 mt-2">
                                 <span class="text-xs px-2 py-1 bg-green-100 text-green-600 rounded-full">Aligned Goals</span>
                                 <span class="text-xs px-2 py-1 bg-blue-100 text-blue-600 rounded-full">Budget Match</span>
                             </div>
                         </div>
-                        <button class="bg-gradient-to-r from-purple-500 to-indigo-400 text-white px-6 py-2 rounded-full hover:opacity-90">
-                            Initiate Collaboration <i class="ml-2 fas fa-handshake"></i>
-                        </button>
+                        <a href="{{url_for('ngo_list')}}" class="bg-gradient-to-r from-purple-500 to-indigo-400 text-white px-6 py-2 rounded-full hover:opacity-90">
+                            View and Initiate Collaboration <i class="ml-2 fas fa-handshake"></i>
+                        </a>
                     </div>
                 </div>
+                {%endfor%}
             </div>
         </div>
 
@@ -185,11 +189,6 @@ Corporate Dashboard
     // Initialize animations
     AOS.init({ duration: 800, once: true });
 
-    // Initialize map
-    var map = L.map('map').setView([20.5937, 78.9629], 4);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-    L.marker([28.6139, 77.2090]).addTo(map).bindPopup('EduForAll Foundation');
-    L.marker([13.0827, 80.2707]).addTo(map).bindPopup('Clean Water Initiative');
 
     // Initialize chart
     const ctx = document.getElementById('impactChart').getContext('2d');
@@ -220,7 +219,84 @@ options: {
     }
 }
 });
+// Dummy Data (Replace this with data from your backend)
+const projects = {{ projects | tojson }};
 
+
+const ngos = {{ngos | tojson }};
+
+// Initialize Leaflet Map
+var map = L.map('map').setView([22.9734, 78.6569], 5); // Centered on India
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+let markers = [];
+
+function addMarkers() {
+// Clear existing markers
+markers.forEach(marker => map.removeLayer(marker));
+markers = [];
+
+// Add Project Markers (Red)
+projects.forEach(project => {
+    let marker = L.marker([project.lat, project.lng], { icon: redIcon })
+        .bindPopup(`<b>${project.name}</b><br>Project`);
+    markers.push(marker);
+    marker.addTo(map);
+});
+
+// Add NGO Markers (Blue)
+ngos.forEach(ngo => {
+    let marker = L.marker([ngo.lat, ngo.lng], { icon: blueIcon })
+        .bindPopup(`<b>${ngo.name}</b><br>NGO`);
+    markers.push(marker);
+    marker.addTo(map);
+});
+}
+
+
+var  blueIcon = L.ExtraMarkers.icon({
+    icon: 'fa-solid fa-building',
+    markerColor: 'red',
+    shape: 'circle',
+    prefix: 'fa'
+});
+
+var redIcon = L.ExtraMarkers.icon({
+    icon: 'fa-solid fa-users',
+    markerColor: 'blue',
+    shape: 'circle',
+    prefix: 'fa'
+});
+
+
+function filterMap() {
+let selectedRegion = document.getElementById("regionFilter").value;
+
+// Clear markers
+markers.forEach(marker => map.removeLayer(marker));
+markers = [];
+
+// Add filtered markers
+projects.filter(p => selectedRegion === "all" || p.region === selectedRegion)
+    .forEach(project => {
+        let marker = L.marker([project.lat, project.lng], { icon: redIcon })
+            .bindPopup(`<b>${project.name}</b><br>Project`);
+        markers.push(marker);
+        marker.addTo(map);
+    });
+
+ngos.filter(n => selectedRegion === "all" || n.region === selectedRegion)
+    .forEach(ngo => {
+        let marker = L.marker([ngo.lat, ngo.lng], { icon: blueIcon })
+            .bindPopup(`<b>${ngo.name}</b><br>NGO`);
+        markers.push(marker);
+        marker.addTo(map);
+    });
+}
+
+addMarkers(); // Load markers on page load
 </script>
 {% endblock %}
 

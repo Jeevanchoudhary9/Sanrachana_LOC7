@@ -105,6 +105,7 @@ class Partnership(db.Model):
     corporate_id=db.Column(db.Integer, db.ForeignKey('user.userid'), nullable=False)
     status=db.Column(db.String(100), nullable=False)
     date=db.Column(db.Date, nullable=False)
+    project_id=db.Column(db.Integer, db.ForeignKey('ngo_project_proposal.project_id'), nullable=False)
 
     def serialize(self):
         return {
@@ -114,11 +115,13 @@ class Partnership(db.Model):
             'status': self.status,
             'date': self.date,
             'corporate_name': User.query.filter_by(userid=self.corporate_id).first().organization_name,
-            'project_name': NGO_Project_Proposal.query.filter_by(user_id=self.ngo_id).first().project_name,
+            'project_name': NGO_Project_Proposal.query.filter_by(project_id=self.project_id).first().project_name,
             'ngo_logo': base64.b64encode(User.query.filter_by(userid=self.ngo_id).first().logo).decode('utf-8'),
-            'location': User.query.filter_by(userid=self.ngo_id).first().location,
-            'requirment_type': NGO_Project_Requirement.query.filter_by(userid=self.ngo_id).first().requirment_type,
-            'requirement_quantity': NGO_Project_Requirement.query.filter_by(userid=self.ngo_id).first().requirement_quantity
+            'location': NGO_Project_Proposal.query.filter_by(project_id=self.project_id).first().location,
+            'ngo_location': User.query.filter_by(userid=self.ngo_id).first().location,
+            'requirment_type': NGO_Project_Requirement.query.filter_by(project_id=self.project_id).first().requirment_type,
+            'requirement_quantity': NGO_Project_Requirement.query.filter_by(project_id=self.project_id).first().requirement_quantity
+
 
         }
     

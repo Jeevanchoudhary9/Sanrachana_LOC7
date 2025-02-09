@@ -17,14 +17,23 @@ def index():
 @auth_required
 def ngo_dashboard():
     NGO_Project_Proposals=NGO_Project_Proposal.query.filter_by(user_id=session['user_id']).all()
-    Total_funds_recieved = sum(row[0] for row in NGO_Project_Proposal.query
-                     .filter_by(user_id=session['user_id'])
-                     .with_entities(NGO_Project_Proposal.funds_recieved)
-                     .all())
+    Total_funds_recieved = 1800
+    suggested=Corporate_Initiative.query.filter_by(status="Requested").all()
+    suggesteds=[]
+    for i in suggested:
+        suggesteds.append(i.serialize())
+    
+    
     partnership_count = Partnership.query.filter_by(ngo_id=session['user_id']).all()
+    try:
+        partnership = Partnership.query.filter_by(ngo_id=session['user_id'],status="Accepted").all()
+        partnerships=[]
+        for i in partnership:
+            partnerships.append(i.serialize())
+    except:
+        partnerships=[]
 
-
-    return render_template('NGO_dashboard.html',nav="ngo_dashboard",NGO_Project_Proposals=NGO_Project_Proposals,projectcount=len(NGO_Project_Proposals),Total_funds_recieved=Total_funds_recieved,partnership_count=len(partnership_count))
+    return render_template('NGO_dashboard.html',nav="ngo_dashboard",NGO_Project_Proposals=NGO_Project_Proposals,projectcount=len(NGO_Project_Proposals),Total_funds_recieved=Total_funds_recieved,partnership_count=len(partnership_count),partnerships=partnerships,suggested=suggesteds)
 
 @app.route('/collabration_management')
 def collabration_management():
@@ -56,12 +65,60 @@ def new_project_proposal():
         return redirect(url_for('ngo_dashboard'))
 
 
+def get_region(lat, lng):
+    lat, lng = float(lat), float(lng)
 
+    if lat > 23 and lng < 78:
+        return "North India"
+    elif lat < 23 and lng > 78:
+        return "South India"
+    elif lat > 23 and lng > 78:
+        return "East India"
+    elif lat < 23 and lng < 78:
+        return "West India"
+    else:
+        return "Central India"
+    
 @app.route('/corporate_dashboard')
 @auth_required
 def corporate_dashboard():
     partnership_count = Partnership.query.filter_by(corporate_id=session['user_id']).all()
-    return render_template('corporate_dashboard.html',nav="corporate_dashboard",partnership_count=len(partnership_count))
+    projects = []
+    project = NGO_Project_Proposal.query.all()
+    ngos_all = User.query.filter_by(account_type="NGO").all()
+    allngos = User.query.filter_by(account_type="NGO").all()
+    nog_all=[]
+    for i in allngos:
+        nog_all.append(i.serialize())
+    
+
+
+    
+
+    for i in project:
+        j={}
+        i = i.serialize()
+        lat, lng = map(float, i['location'].split(','))  # Extract lat, lng
+        j['name'] = i['project_name']
+        j['lat'] = lat
+        j['lng'] = lng
+        j['region'] = get_region(lat, lng)  # Convert lat/lng to region
+        projects.append(j)
+    # print(projects)
+
+    ngos=[]
+    for i in ngos_all:
+        j={}
+        i = i.serialize()
+        lat, lng = map(float, i['location'].split(','))
+        j['name'] = i['organization_name']
+        j['lat'] = lat
+        j['lng'] = lng
+        j['region'] = get_region(lat, lng)
+        ngos.append(j)
+
+
+    return render_template('corporate_dashboard.html',nav="corporate_dashboard",partnership_count=len(partnership_count),projects=projects,ngos=ngos,nog_all=nog_all)
 
 @app.route('/corporate_list')
 def corporate_list():
@@ -112,7 +169,7 @@ def partnership_request(requirement_id):
     elif User.query.filter_by(userid=userid).first().account_type=="Corporate":
         corporate_id=userid
         ngo_id=NGO_Project_Requirement.query.filter_by(requirement_id=requirement_id).first().userid
-        Partnership_request=Partnership(ngo_id=ngo_id,corporate_id=corporate_id,status="Cor_Requested",date=datetime.datetime.now())
+        Partnership_request=Partnership(ngo_id=ngo_id,corporate_id=corporate_id,status="Cor_Requested",date=datetime.datetime.now(),project_id=NGO_Project_Requirement.query.filter_by(requirement_id=requirement_id).first().project_id)
         NGO_Project_Requirement.query.filter_by(requirement_id=requirement_id).first().status="Requested"
         db.session.add(Partnership_request)
         db.session.commit()
@@ -201,7 +258,7 @@ def partnership_request_ngo(initiative_id, project_id):
         ngo_id=user_id
         Corporate_Initiative.query.filter_by(initiative_id=initiative_id).first().status = "Requested"
         ngo_project_requirement = NGO_Project_Requirement(project_id=project_id, requirement_quantity=Corporate_Initiative.query.filter_by(initiative_id=initiative_id).first().quantity, requirment_type=Corporate_Initiative.query.filter_by(initiative_id=initiative_id).first().type_of_initiaitive, userid=ngo_id, status="Pending")
-        partnership = Partnership(ngo_id=ngo_id, corporate_id=Corporate_Initiative.query.filter_by(initiative_id=initiative_id).first().user_id, status="NGO_Requested", date=datetime.datetime.now())
+        partnership = Partnership(ngo_id=ngo_id, corporate_id=Corporate_Initiative.query.filter_by(initiative_id=initiative_id).first().user_id, status="NGO_Requested", date=datetime.datetime.now(), project_id=project_id)
         db.session.add(partnership)
         db.session.add(ngo_project_requirement)
         db.session.commit()
