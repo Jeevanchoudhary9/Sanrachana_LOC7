@@ -137,3 +137,44 @@ const conversation = {{ chat.conversation|tojson|safe }};
 conversation.forEach(message => renderMessage(message));
 </script>
 {% endblock %}
+
+
+{%block style %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
+    body {
+        font-family: 'Inter', sans-serif;
+    }
+
+    .gradient-text {
+        background: linear-gradient(45deg, #6B46C1, #9F7AEA);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .glass-effect {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-hover {
+        transition: all 0.3s ease;
+    }
+
+    .card-hover:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-link {
+        transition: all 0.2s ease;
+    }
+
+    .chat-link:hover {
+        color: #6B46C1;
+    }
+</style>
+{%endblock %}

@@ -19,6 +19,48 @@
               
                 <a href="{{url_for('logout')}}" class="bg-black/5 hover:bg-black/10 px-6 py-2 rounded-full transition-all text-gray-700">Logout</a>
             </div>
+            {% elif nav=="new_project_proposal" %}
+            <span class="text-gray-600 text-leading">New Project Proposal</span>
+            <div class="space-x-4">
+              
+                <a href="{{url_for('logout')}}" class="bg-black/5 hover:bg-black/10 px-6 py-2 rounded-full transition-all text-gray-700">Logout</a>
+            </div>
+            {% elif nav=="corporate_list" %}
+            <span class="text-gray-600 text-leading">Corporate List</span>
+            <div class="space-x-4">
+              
+                <a href="{{url_for('logout')}}" class="bg-black/5 hover:bg-black/10 px-6 py-2 rounded-full transition-all text-gray-700">Logout</a>
+            </div>
+            {% elif nav=="corporate_dashboard" %}
+            <span class="text-gray-600 text-leading">Welcome, Corporate Portal</span>
+            <div class="space-x-4">
+              
+                <a href="{{url_for('logout')}}" class="bg-black/5 hover:bg-black/10 px-6 py-2 rounded-full transition-all text-gray-700">Logout</a>
+            </div>
+            {% elif nav=="ngo_list" %}
+            <span class="text-gray-600 text-leading">NGO List</span>
+            <div class="space-x-4">
+              
+                <a href="{{url_for('logout')}}" class="bg-black/5 hover:bg-black/10 px-6 py-2 rounded-full transition-all text-gray-700">Logout</a>
+            </div>
+            {% elif nav=="corporate_initiative" %}
+            <span class="text-gray-600 text-leading">Corporate Initiatives</span>
+            <div class="space-x-4">
+              
+                <a href="{{url_for('logout')}}" class="bg-black/5 hover:bg-black/10 px-6 py-2 rounded-full transition-all text-gray-700">Logout</a>
+            </div>
+            {% elif nav=="chat" %}
+            <span class="text-gray-600 text-leading">Chat</span>
+            <div class="space-x-4">
+              
+                <a href="{{url_for('logout')}}" class="bg-black/5 hover:bg-black/10 px-6 py-2 rounded-full transition-all text-gray-700">Logout</a>
+            </div>
+            {% elif nav=="ngo_portal_accept" %}
+            <span class="text-gray-600 text-leading">NGO Portal Accept</span>
+            <div class="space-x-4">
+              
+                <a href="{{url_for('logout')}}" class="bg-black/5 hover:bg-black/10 px-6 py-2 rounded-full transition-all text-gray-700">Logout</a>
+            </div>
             {% else %}
             <div class="space-x-4">
               <a href="{{url_for('login')}}" class="bg-black/5 hover:bg-black/10 px-6 py-2 rounded-full transition-all text-gray-700">Login</a>
