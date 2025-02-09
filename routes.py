@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from sqlalchemy import distinct
 from app import app
 from functools import wraps
-from models import db, User, NGO_Project_Proposal,Partnership,NGO_Project_Requirement,Corporate_Initiative
+from models import db, User, NGO_Project_Proposal,Partnership,NGO_Project_Requirement,Corporate_Initiative,Chat
 import random
 import razorpay
 from auth import auth_required, admin_required
@@ -32,8 +32,17 @@ def ngo_dashboard():
             partnerships.append(i.serialize())
     except:
         partnerships=[]
+    chat = Chat.query.filter_by(ngo_id=session['user_id']).all()
+    chats=[]
+    for i in chat:
+        i=i.serialize()
+        i['corporate_name']=User.query.filter_by(userid=i['corporate_id']).first().organization_name
+        i['project_name']=NGO_Project_Proposal.query.filter_by(project_id=i['project_id']).first().project_name
+        chats.append(i)
+    
+        
 
-    return render_template('NGO_dashboard.html',nav="ngo_dashboard",NGO_Project_Proposals=NGO_Project_Proposals,projectcount=len(NGO_Project_Proposals),Total_funds_recieved=Total_funds_recieved,partnership_count=len(partnership_count),partnerships=partnerships,suggested=suggesteds)
+    return render_template('NGO_dashboard.html',nav="ngo_dashboard",NGO_Project_Proposals=NGO_Project_Proposals,projectcount=len(NGO_Project_Proposals),Total_funds_recieved=Total_funds_recieved,partnership_count=len(partnership_count),partnerships=partnerships,suggested=suggesteds,chats=chats)
 
 @app.route('/collabration_management')
 def collabration_management():
@@ -265,3 +274,80 @@ def partnership_request_ngo(initiative_id, project_id):
 
     return redirect(url_for('corporate_list'))
 
+
+@app.route('/chat_create/<int:user_id>/<int:project_id>/<int:id>', methods=["GET"])
+def chat_create(user_id, project_id,id):
+    print(user_id, project_id)
+    print("hi")
+    role_backend=User.query.filter_by(userid=session['user_id']).first().account_type
+    role_portal=User.query.filter_by(userid=user_id).first().account_type
+
+    if role_backend=="NGO":
+        if Chat.query.filter_by(ngo_id=session['user_id'],corporate_id=user_id,project_id=project_id).first():
+            Corporate_Initiative.query.filter_by(initiative_id=id).first().status = "Requested"
+            partnership = Partnership(ngo_id=session['user_id'], corporate_id=Corporate_Initiative.query.filter_by(initiative_id=id).first().user_id, status="NGO_Requested", date=datetime.datetime.now(), project_id=project_id)
+            db.session.add(partnership)
+            db.session.commit()
+            flash('Partnership request sent successfully!,Chat ALready Exist','success')
+            return redirect(url_for('corporate_list'))
+        
+        chat=Chat(ngo_id=session['user_id'],corporate_id=user_id,project_id=project_id,conversation=[],date=datetime.datetime.now())
+        Corporate_Initiative.query.filter_by(initiative_id=id).first().status = "Requested"
+        partnership = Partnership(ngo_id=session['user_id'], corporate_id=Corporate_Initiative.query.filter_by(initiative_id=id).first().user_id, status="NGO_Requested", date=datetime.datetime.now(), project_id=project_id)
+        db.session.add(chat)
+        db.session.add(partnership)
+        db.session.commit()
+
+        return redirect(url_for('corporate_list'))
+        
+    
+    elif role_backend=="Corporate":
+        if Chat.query.filter_by(ngo_id=user_id,corporate_id=session['user_id'],project_id=project_id).first():
+            NGO_Project_Requirement.query.filter_by(requirement_id=id).first().status = "Requested"
+            Partnership_request=Partnership(ngo_id=user_id,corporate_id=session['user_id'],status="Cor_Requested",date=datetime.datetime.now(),project_id=NGO_Project_Requirement.query.filter_by(requirement_id=id).first().project_id)
+            db.session.add(Partnership_request)
+            db.session.commit()
+            flash('Partnership request sent successfully!,Chat ALready Exist','success')
+            return redirect(url_for('ngo_list'))
+        
+        chat=Chat(ngo_id=user_id,corporate_id=session['user_id'],project_id=project_id,conversation=[],date=datetime.datetime.now())
+        NGO_Project_Requirement.query.filter_by(requirement_id=id).first().status = "Requested"
+        Partnership_request=Partnership(ngo_id=user_id,corporate_id=session['user_id'],status="Cor_Requested",date=datetime.datetime.now(),project_id=NGO_Project_Requirement.query.filter_by(requirement_id=id).first().project_id)
+        db.session.add(chat)
+        db.session.add(Partnership_request)
+        db.session.commit()
+
+        return redirect(url_for('ngo_list'))
+
+@app.route('/chat/<int:chat_id>', methods=["GET"])
+def chat(chat_id):
+    chat = Chat.query.filter_by(chat_id=chat_id).first()
+    chat=chat.serialize()
+    chat['corporate_name']=User.query.filter_by(userid=chat['corporate_id']).first().organization_name
+    chat['project_name']=NGO_Project_Proposal.query.filter_by(project_id=chat['project_id']).first().project_name
+    chat['current']=User.query.filter_by(userid=session['user_id']).first().account_type
+    # return chat
+    return render_template('chat.html',nav="chat",chat=chat)
+
+@app.route('/chat', methods=["POST"])
+def chat_post():
+    data = request.json
+    chat_id = data['chat_id']
+    message = data['message']
+    print(data)
+    chat = Chat.query.filter_by(chat_id=chat_id).first()
+    conversation = chat.conversation
+    if User.query.filter_by(userid=session['user_id']).first().account_type=="NGO":
+        message['ngo']='sender'
+        message['corporate']='receiver'
+        print("ngo")
+    elif User.query.filter_by(userid=session['user_id']).first().account_type=="Corporate":
+        message['ngo']='receiver'
+        message['corporate']='sender'
+        print("corporate")
+        
+    conversation.append(message)
+    chat.conversation = conversation
+    db.session.commit()
+    print("hi")
+    return {"status": "success"}

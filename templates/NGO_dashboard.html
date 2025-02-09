@@ -192,6 +192,24 @@
                 <h2 class="text-2xl font-bold gradient-text mb-6">Impact Overview</h2>
                 <canvas id="impactChart" class="w-full h-64"></canvas>
             </div>
+
+            <!-- Matched Corporates -->
+            <div class="glass-effect rounded-2xl p-8" data-aos="fade-up">
+                <h2 class="text-2xl font-bold gradient-text mb-6">Chats</h2>
+                {%for chat in chats %}
+                <div class="space-y-4 my-4">
+                    <div class="glass-effect p-6 rounded-xl hover-scale flex items-center justify-between">
+                        <div>
+                            <h3 class="font-semibold">Project Name: {{chat.project_name}}</h3>
+                            <p class="text-sm text-gray-500">Corporate Name: {{chat.corporate_name}} </p>
+                        </div>
+                        <a href="{{url_for('chat',chat_id=chat.chat_id)}}" class="bg-gradient-to-r from-purple-500 to-indigo-400 text-white px-6 py-2 rounded-full hover:opacity-90">
+                            Chat <i class="ml-2 fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
         </div>
     </main>
 

@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
 import datetime
 import base64
+from sqlalchemy.ext.mutable import MutableList
 
 db=SQLAlchemy(app)
 
@@ -153,6 +154,25 @@ class Corporate_Initiative(db.Model):
             'logo': base64.b64encode(User.query.filter_by(userid=self.user_id).first().logo).decode('utf-8')
         }
     
+class Chat(db.Model):
+    __tablename__ = 'chat'
+    chat_id=db.Column(db.Integer, primary_key=True, autoincrement=True)
+    ngo_id=db.Column(db.Integer, db.ForeignKey('user.userid'), nullable=False)
+    corporate_id=db.Column(db.Integer, db.ForeignKey('user.userid'), nullable=False)
+    project_id=db.Column(db.Integer, db.ForeignKey('ngo_project_proposal.project_id'), nullable=False)
+    conversation = db.Column(MutableList.as_mutable(db.JSON), default=[])
+    date=db.Column(db.Date, nullable=False)
+
+
+    def serialize(self):
+        return {
+            'chat_id': self.chat_id,
+            'ngo_id': self.ngo_id,
+            'corporate_id': self.corporate_id,
+            'project_id': self.project_id,
+            'conversation': self.conversation,
+            'date': self.date,
+        }
      
 
 with app.app_context():

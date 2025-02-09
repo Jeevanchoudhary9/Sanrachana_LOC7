@@ -70,9 +70,10 @@
                                 <a href="{{url_for('partnership_request',requirement_id = requirement.requirement_id)}}" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium w-full">
                                     Provide Funding
                                 </a>
-                                <button class="px-4 py-2 text-purple-600 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors font-medium w-full">
+                                <a href="{{url_for('chat_create',user_id=requirement.userid,project_id=requirement.project_id,id=requirement.requirement_id)}}" class="px-4 py-2 text-purple-600 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors font-medium w-full">
                                     Chat
-                                </button>
+                                    
+                                </a>
                             </div>
                         </div>
                     </div>

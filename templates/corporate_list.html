@@ -90,9 +90,22 @@
                                 </div>
                             
                                 <!-- Chat Button -->
-                                <button class="px-4 py-2 text-purple-600 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors font-medium w-full">
+                                <button onclick="toggleDropdown_chat(this)"  class="px-4 py-2 text-purple-600 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors font-medium w-full">
                                     Chat
                                 </button>
+
+                                <!-- Hidden Dropdown Menu -->
+                                <div class="hidden dropdown-menu_chat bg-white border border-gray-200 rounded-lg shadow-lg mt-2">
+                                    {% for project in project_list %}
+                                    
+                                        <a href="{{ url_for('chat_create', user_id=requirement.user_id, project_id=project.project_id,id=requirement.initiative_id) }}"
+                                           class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                            {{ project.project_name }}
+                                        </a>
+
+                                    {% endfor %}
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -154,6 +167,14 @@
     function toggleDropdown(button) {
         let dropdown = button.nextElementSibling;
         document.querySelectorAll('.dropdown-menu').forEach(menu => {
+            if (menu !== dropdown) menu.classList.add('hidden'); // Hide other dropdowns
+        });
+        dropdown.classList.toggle('hidden');
+    }
+
+    function toggleDropdown_chat(button) {
+        let dropdown = button.nextElementSibling;
+        document.querySelectorAll('.dropdown-menu_chat').forEach(menu => {
             if (menu !== dropdown) menu.classList.add('hidden'); // Hide other dropdowns
         });
         dropdown.classList.toggle('hidden');

@@ -1,0 +1,194 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900">
+    <!-- Hero Section -->
+    <div class="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="absolute w-full h-full">
+            <div class="absolute top-0 left-0 w-96 h-96 bg-purple-100 rounded-full filter blur-3xl opacity-70"></div>
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-indigo-100 rounded-full filter blur-3xl opacity-70"></div>
+        </div>
+        <div class="container mx-auto text-center z-10" data-aos="fade-up">
+            <h2 class="text-6xl font-bold mb-6 gradient-text">Transform Society Together</h2>
+            <p class="text-xl mb-12 text-gray-600 max-w-2xl mx-auto">Bridging the gap between Corporations and NGOs to create lasting social impact through innovative CSR partnerships</p>
+            <div class="flex justify-center space-x-6">
+                <button class="group relative px-8 py-4 bg-white text-gray-900 rounded-full overflow-hidden hover-scale shadow-lg">
+                    <span class="relative z-10 group-hover:text-white transition-colors duration-300">For Corporates</span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-purple-500 to-indigo-400 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+                </button>
+                <button class="px-8 py-4 border-2 border-gray-300 rounded-full hover:bg-black/5 transition-all hover-scale text-gray-700">
+                    For NGOs
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="container mx-auto py-16 px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="glass-effect p-8 rounded-2xl text-center" data-aos="fade-up">
+                <h3 class="text-4xl font-bold gradient-text mb-2">500+</h3>
+                <p class="text-gray-600">Corporate Partners</p>
+            </div>
+            <div class="glass-effect p-8 rounded-2xl text-center" data-aos="fade-up" data-aos-delay="100">
+                <h3 class="text-4xl font-bold gradient-text mb-2">1000+</h3>
+                <p class="text-gray-600">NGOs Onboard</p>
+            </div>
+            <div class="glass-effect p-8 rounded-2xl text-center" data-aos="fade-up" data-aos-delay="200">
+                <h3 class="text-4xl font-bold gradient-text mb-2">₹100Cr+</h3>
+                <p class="text-gray-600">Funds Allocated</p>
+            </div>
+            <div class="glass-effect p-8 rounded-2xl text-center" data-aos="fade-up" data-aos-delay="300">
+                <h3 class="text-4xl font-bold gradient-text mb-2">50+</h3>
+                <p class="text-gray-600">Cities Impacted</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="container mx-auto py-24 px-4">
+        <h3 class="text-4xl font-bold text-center mb-16 gradient-text" data-aos="fade-up">Revolutionary Features</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-effect p-8 rounded-2xl hover-scale" data-aos="fade-up" data-aos-delay="100">
+                <div class="h-16 w-16 bg-gradient-to-br from-purple-500 to-indigo-400 rounded-full flex items-center justify-center mb-6 text-white">
+                    <i class="fas fa-handshake text-2xl"></i>
+                </div>
+                <h4 class="text-xl font-bold mb-4">Smart Matching</h4>
+                <p class="text-gray-600">AI-powered system that connects corporates with compatible NGO partners</p>
+            </div>
+            <div class="glass-effect p-8 rounded-2xl hover-scale" data-aos="fade-up" data-aos-delay="200">
+                <div class="h-16 w-16 bg-gradient-to-br from-purple-500 to-indigo-400 rounded-full flex items-center justify-center mb-6 text-white">
+                    <i class="fas fa-chart-line text-2xl"></i>
+                </div>
+                <h4 class="text-xl font-bold mb-4">Impact Tracking</h4>
+                <p class="text-gray-600">Real-time monitoring and visualization of your CSR initiatives</p>
+            </div>
+            <div class="glass-effect p-8 rounded-2xl hover-scale" data-aos="fade-up" data-aos-delay="300">
+                <div class="h-16 w-16 bg-gradient-to-br from-purple-500 to-indigo-400 rounded-full flex items-center justify-center mb-6 text-white">
+                    <i class="fas fa-shield-alt text-2xl"></i>
+                </div>
+                <h4 class="text-xl font-bold mb-4">Compliance Management</h4>
+                <p class="text-gray-600">Automated compliance tracking and reporting for CSR activities</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials Section -->
+    <div class="py-24 bg-gradient-to-br from-purple-50 to-indigo-50">
+        <div class="container mx-auto px-4">
+            <h3 class="text-4xl font-bold text-center mb-16 gradient-text" data-aos="fade-up">Success Stories</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-effect p-8 rounded-2xl" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center mb-6">
+                        <img src="https://via.placeholder.com/60" alt="Avatar" class="rounded-full mr-4">
+                        <div>
+                            <h5 class="font-bold">Rahul Sharma</h5>
+                            <p class="text-gray-600">CSR Head, Tech Solutions</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"The platform has revolutionized how we manage our CSR initiatives. The smart matching system helped us find perfect NGO partners."</p>
+                </div>
+                <div class="glass-effect p-8 rounded-2xl" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center mb-6">
+                        <img src="https://via.placeholder.com/60" alt="Avatar" class="rounded-full mr-4">
+                        <div>
+                            <h5 class="font-bold">Priya Patel</h5>
+                            <p class="text-gray-600">Director, EduCare NGO</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"We've seen a 300% increase in corporate partnerships since joining. The platform makes collaboration seamless and efficient."</p>
+                </div>
+                <div class="glass-effect p-8 rounded-2xl" data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex items-center mb-6">
+                        <img src="https://via.placeholder.com/60" alt="Avatar" class="rounded-full mr-4">
+                        <div>
+                            <h5 class="font-bold">Amit Kumar</h5>
+                            <p class="text-gray-600">CEO, Green Future</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"The impact tracking features have been invaluable in demonstrating our social impact to stakeholders."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="container mx-auto py-24 px-4">
+        <div class="glass-effect p-16 rounded-3xl text-center" data-aos="fade-up">
+            <h3 class="text-4xl font-bold mb-6 gradient-text">Ready to Make an Impact?</h3>
+            <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">Join our platform today and be part of India's largest CSR network</p>
+            <button class="px-8 py-4 bg-gradient-to-r from-purple-500 to-indigo-400 text-white rounded-full hover:opacity-90 transition-all hover-scale">
+                Get Started Now
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-200 py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="gradient-text text-xl font-bold mb-4">CSR Portal</div>
+                    <p class="text-gray-600">Connecting purpose with impact</p>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">Quick Links</h5>
+                    <ul class="space-y-2 text-gray-600">
+                        <li><a href="#" class="hover:text-purple-600">About Us</a></li>
+                        <li><a href="#" class="hover:text-purple-600">Features</a></li>
+                        <li><a href="#" class="hover:text-purple-600">Success Stories</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">Resources</h5>
+                    <ul class="space-y-2 text-gray-600">
+                        <li><a href="#" class="hover:text-purple-600">Blog</a></li>
+                        <li><a href="#" class="hover:text-purple-600">CSR Guidelines</a></li>
+                        <li><a href="#" class="hover:text-purple-600">Support</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">Connect</h5>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-600 hover:text-purple-600"><i class="fab fa-linkedin text-xl"></i></a>
+                        <a href="#" class="text-gray-600 hover:text-purple-600"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-600 hover:text-purple-600"><i class="fab fa-facebook text-xl"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-12 text-gray-600">
+                <p>© 2024 CSR Portal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+{% endblock %}
+
+{% block style %}
+<style>
+    .gradient-text {
+        background: linear-gradient(45deg, #6B46C1, #9F7AEA);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    .glass-effect {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .hover-scale {
+        transition: transform 0.3s ease;
+    }
+    
+    .hover-scale:hover {
+        transform: scale(1.05);
+    }
+
+    .group:hover .group-hover\:text-white {
+        color: white;
+    }
+</style>
+{% endblock %}
