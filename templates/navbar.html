@@ -11,10 +11,20 @@
     <div class="container mx-auto">
         <div class="glass-effect mx-4 rounded-full px-6 py-4 flex justify-between items-center">
             <a href="{{url_for('login')}}" class="text-2xl font-bold gradient-text">CSR Portal</a>
+
+            {% if nav=="ngo_dashboard" %}
+
+            <span class="text-gray-600 text-leading">Welcome, NGO Portal</span>
             <div class="space-x-4">
-                <a href="{{url_for('login')}}" class="bg-black/5 hover:bg-black/10 px-6 py-2 rounded-full transition-all text-gray-700">Login</a>
-                <a href="{{url_for('register')}}" class="bg-gradient-to-r from-purple-600 to-indigo-500 text-white px-6 py-2 rounded-full hover:opacity-90 transition-all">Register</a>
+              
+                <a href="{{url_for('logout')}}" class="bg-black/5 hover:bg-black/10 px-6 py-2 rounded-full transition-all text-gray-700">Logout</a>
             </div>
+            {% else %}
+            <div class="space-x-4">
+              <a href="{{url_for('login')}}" class="bg-black/5 hover:bg-black/10 px-6 py-2 rounded-full transition-all text-gray-700">Login</a>
+              <a href="{{url_for('register')}}" class="bg-gradient-to-r from-purple-600 to-indigo-500 text-white px-6 py-2 rounded-full hover:opacity-90 transition-all">Register</a>
+          </div>
+          {% endif %}
         </div>
     </div>
 </nav>
