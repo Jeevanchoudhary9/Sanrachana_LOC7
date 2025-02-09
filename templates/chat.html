@@ -8,7 +8,6 @@
             <div class="border-b border-gray-200 p-4">
                 <div class="flex items-center justify-between">
                     <div>
-                        {{chat}}
                         <h2 class="text-lg font-semibold text-gray-700">{{ chat.project_name }}</h2>
                         <p class="text-sm text-gray-500">{{ chat.corporate_name }}</p>
                     </div>
@@ -61,11 +60,23 @@ function formatTimestamp() {
 
 // Function to render a single message
 function renderMessage(message) {
-    const isSender = message.ngo === 'sender';
+    // Message is shown on the right if:
+    // 1. Current user is NGO and message is from NGO (ngo: 'sender')
+    // 2. Current user is Corporate and message is from Corporate (corporate: 'sender')
+    const isCurrentUserSender = 
+        (chatData.current === 'NGO' && message.ngo === 'sender') || 
+        (chatData.current === 'Corporate' && message.corporate === 'sender');
+
     const messageHtml = `
-        <div class="flex ${isSender ? 'justify-end' : 'justify-start'} mb-4">
+        <div class="flex ${isCurrentUserSender ? 'justify-end' : 'justify-start'} mb-4">
             <div class="max-w-[70%]">
-                <div class="rounded-lg p-4 ${isSender ? 'bg-blue-100 text-blue-900' : 'bg-gray-100 text-gray-900'}">
+                <div class="rounded-lg p-4 ${
+                    isCurrentUserSender 
+                        ? chatData.current === 'NGO' 
+                            ? 'bg-blue-100 text-blue-900' 
+                            : 'bg-green-100 text-green-900'
+                        : 'bg-gray-100 text-gray-900'
+                }">
                     <p class="text-sm">${message.message}</p>
                 </div>
                 <div class="text-xs text-gray-500 mt-1">
@@ -102,7 +113,7 @@ function sendMessage() {
             ngo_id: chatData.ngo_id,
             corporate_id: chatData.corporate_id,
             project_id: chatData.project_id,
-            message: messageData
+            message: messageData,
         })
     })
     .then(response => response.json())
